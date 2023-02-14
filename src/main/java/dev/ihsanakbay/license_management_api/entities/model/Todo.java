@@ -1,6 +1,8 @@
-package dev.ihsanakbay.license_management_api.model;
+package dev.ihsanakbay.license_management_api.entities.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -8,18 +10,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "todos")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Getter
-@Setter
 public class Todo {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private String id;
+    @NotBlank
+    @NotNull
     private String todoText;
     private Boolean isDone;
     private LocalDateTime deadlineDate;
@@ -27,6 +30,8 @@ public class Todo {
     private LocalDateTime updatedAt;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "license_id", referencedColumnName = "id", nullable = false)
+    @NotBlank
+    @NotNull
     private License license;
 
     public Todo(String todoText, Boolean isDone, LocalDateTime deadlineDate, LocalDateTime createdAt, License license) {

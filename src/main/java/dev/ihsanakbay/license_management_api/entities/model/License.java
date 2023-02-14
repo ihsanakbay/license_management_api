@@ -1,33 +1,44 @@
-package dev.ihsanakbay.license_management_api.model;
+package dev.ihsanakbay.license_management_api.entities.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
 @Table(name = "licenses")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Getter
-@Setter
 public class License {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private String id;
+    @NotBlank
+    @NotNull
     private String productName;
+    @NotBlank
+    @NotNull
     private String number;
+    @NotBlank
+    @NotNull
     private LicenseType licenseType;
+    @NotBlank
+    @NotNull
     private String owner;
+    @NotBlank
+    @NotNull
     private String distributor;
+    @NotBlank
+    @NotNull
     private Boolean status;
     private LocalDateTime closureDate;
     private LocalDateTime validityDate;
@@ -42,9 +53,11 @@ public class License {
     private LocalDateTime updatedAt;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
+    @NotBlank
+    @NotNull
     private Country country;
     @OneToMany(mappedBy = "license", fetch = FetchType.LAZY)
-    private List<Todo> todos;
+    private Set<Todo> todos;
 
     public enum LicenseType {
         CERTIFIED, PROJECT
@@ -93,7 +106,7 @@ public class License {
         this.country = country;
     }
 
-    public License(String productName, String number, LicenseType licenseType, String owner, String distributor, Boolean status, LocalDateTime closureDate, LocalDateTime validityDate, String description, String storageCondition, String shelfLife, String batchSize, String apiSupplier, String packingInfo, String tag, LocalDateTime createdAt, LocalDateTime updatedAt, Country country, List<Todo> todos) {
+    public License(String productName, String number, LicenseType licenseType, String owner, String distributor, Boolean status, LocalDateTime closureDate, LocalDateTime validityDate, String description, String storageCondition, String shelfLife, String batchSize, String apiSupplier, String packingInfo, String tag, LocalDateTime createdAt, LocalDateTime updatedAt, Country country, Set<Todo> todos) {
         this.productName = productName;
         this.number = number;
         this.licenseType = licenseType;

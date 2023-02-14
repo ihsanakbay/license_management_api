@@ -1,12 +1,11 @@
-package dev.ihsanakbay.license_management_api.dto;
+package dev.ihsanakbay.license_management_api.entities.dto;
 
-import dev.ihsanakbay.license_management_api.model.License;
+import dev.ihsanakbay.license_management_api.entities.model.License;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
-public record UpdateLicenseRequest(
+public record LicenseDto(
         String id,
         String productName,
         String number,
@@ -23,7 +22,9 @@ public record UpdateLicenseRequest(
         String apiSupplier,
         String packingInfo,
         String tag,
-        String countryCode,
-        Optional<List<TodoUpdateRequest>> todos
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        CountryDto country,
+        Set<TodoDto> todos
 ) {
 }

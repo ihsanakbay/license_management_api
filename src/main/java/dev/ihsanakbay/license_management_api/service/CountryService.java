@@ -1,13 +1,14 @@
 package dev.ihsanakbay.license_management_api.service;
 
-import dev.ihsanakbay.license_management_api.dto.CountryDto;
-import dev.ihsanakbay.license_management_api.dto.CreateCountryRequest;
-import dev.ihsanakbay.license_management_api.dto.ServiceResponse;
-import dev.ihsanakbay.license_management_api.dto.UpdateCountryRequest;
-import dev.ihsanakbay.license_management_api.dto.converter.CountryDtoConverter;
+import dev.ihsanakbay.license_management_api.entities.dto.CountryDto;
+import dev.ihsanakbay.license_management_api.entities.requests.CreateCountryRequest;
+import dev.ihsanakbay.license_management_api.entities.responses.ServiceResponse;
+import dev.ihsanakbay.license_management_api.entities.requests.UpdateCountryRequest;
 import dev.ihsanakbay.license_management_api.exception.DataNotFoundException;
-import dev.ihsanakbay.license_management_api.model.Country;
+import dev.ihsanakbay.license_management_api.mappers.CountryMapper;
+import dev.ihsanakbay.license_management_api.entities.model.Country;
 import dev.ihsanakbay.license_management_api.repository.CountryRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,19 +16,21 @@ import java.util.List;
 
 
 @Service
+@Primary
 public class CountryService {
     private final CountryRepository countryRepository;
-    private final CountryDtoConverter countryDtoConverter;
+    private final CountryMapper countryMapper;
 
-    public CountryService(CountryRepository countryRepository, CountryDtoConverter countryDtoConverter) {
+    public CountryService(CountryRepository countryRepository, CountryMapper countryMapper) {
         this.countryRepository = countryRepository;
-        this.countryDtoConverter = countryDtoConverter;
+        this.countryMapper = countryMapper;
     }
+
 
     public ServiceResponse<List<CountryDto>> getCountries() {
         var countries = countryRepository.findAll()
                 .stream()
-                .map(countryDtoConverter::convertToCountryDto)
+                .map(countryMapper::countryToCountryDto)
                 .toList();
         return new ServiceResponse<>(
                 true,
@@ -40,7 +43,7 @@ public class CountryService {
         return new ServiceResponse<>(
                 true,
                 "",
-                countryDtoConverter.convertToCountryDto(findCountryById(id))
+                countryMapper.countryToCountryDto(findCountryById(id))
         );
     }
 
@@ -48,7 +51,7 @@ public class CountryService {
         return new ServiceResponse<>(
                 true,
                 "",
-                countryDtoConverter.convertToCountryDto(findCountryByCode(code))
+                countryMapper.countryToCountryDto(findCountryByCode(code))
         );
     }
 
@@ -68,7 +71,8 @@ public class CountryService {
                 LocalDateTime.now()
 
         );
-        var result = countryDtoConverter.convertToCountryDto(countryRepository.save(country));
+
+        var result = countryMapper.countryToCountryDto(countryRepository.save(country));
         return new ServiceResponse<>(
                 true,
                 "Country created successfully",
@@ -87,7 +91,7 @@ public class CountryService {
                 LocalDateTime.now()
         );
 
-        var result = countryDtoConverter.convertToCountryDto(countryRepository.save(country));
+        var result = countryMapper.countryToCountryDto(countryRepository.save(country));
         return new ServiceResponse<>(
                 true,
                 "Country updated successfully",
@@ -111,7 +115,7 @@ public class CountryService {
         var founded = findCountryById(id);
         founded.setStatus(!founded.getStatus());
         founded.setUpdatedAt(LocalDateTime.now());
-        var result = countryDtoConverter.convertToCountryDto(countryRepository.save(founded));
+        var result = countryMapper.countryToCountryDto(countryRepository.save(founded));
         return new ServiceResponse<>(
                 true,
                 "Country status changed successfully",

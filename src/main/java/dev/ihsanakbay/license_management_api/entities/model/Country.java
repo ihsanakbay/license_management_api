@@ -1,6 +1,8 @@
-package dev.ihsanakbay.license_management_api.model;
+package dev.ihsanakbay.license_management_api.entities.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -9,12 +11,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "countries")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Getter
-@Setter
 public class Country {
 
     @Id
@@ -23,8 +24,14 @@ public class Country {
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private String id;
     @Column(unique = true)
+    @NotBlank
+    @NotNull
     private String code;
+    @NotBlank
+    @NotNull
     private String name;
+    @NotBlank
+    @NotNull
     private Boolean status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

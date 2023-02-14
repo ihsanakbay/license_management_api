@@ -1,8 +1,8 @@
-package dev.ihsanakbay.license_management_api.dto;
+package dev.ihsanakbay.license_management_api.entities.dto;
 
 import java.time.LocalDateTime;
 
-public record TodoUpdateRequest(
+public record TodoDto(
         String id,
         String todoText,
         Boolean isDone,
