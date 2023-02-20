@@ -1,11 +1,12 @@
 package dev.ihsanakbay.license_management_api.controller;
 
-import dev.ihsanakbay.license_management_api.dto.LicenseDto;
-import dev.ihsanakbay.license_management_api.dto.CreateLicenseRequest;
-import dev.ihsanakbay.license_management_api.dto.ServiceResponse;
-import dev.ihsanakbay.license_management_api.dto.UpdateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.dto.LicenseDto;
+import dev.ihsanakbay.license_management_api.entities.requests.CreateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.responses.ServiceResponse;
+import dev.ihsanakbay.license_management_api.entities.requests.UpdateLicenseRequest;
 import dev.ihsanakbay.license_management_api.service.LicenseService;
 import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,12 +32,12 @@ public class LicensesController {
     }
 
     @PostMapping
-    public ServiceResponse<LicenseDto> createLicense(@Valid @RequestBody CreateLicenseRequest request) {
+    public ServiceResponse<LicenseDto> createLicense(@Validated @RequestBody CreateLicenseRequest request) {
         return licenseService.createLicense(request);
     }
 
-    @PatchMapping
-    public ServiceResponse<LicenseDto> updateLicense(@Valid @RequestBody UpdateLicenseRequest request) {
+    @PutMapping
+    public ServiceResponse<LicenseDto> updateLicense(@Validated @RequestBody UpdateLicenseRequest request) {
         return licenseService.updateLicense(request);
     }
 

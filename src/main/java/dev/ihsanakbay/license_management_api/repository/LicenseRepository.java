@@ -1,6 +1,6 @@
 package dev.ihsanakbay.license_management_api.repository;
 
-import dev.ihsanakbay.license_management_api.model.License;
+import dev.ihsanakbay.license_management_api.entities.model.License;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

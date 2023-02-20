@@ -1,16 +1,20 @@
 package dev.ihsanakbay.license_management_api.service;
 
-import dev.ihsanakbay.license_management_api.dto.*;
-import dev.ihsanakbay.license_management_api.dto.converter.LicenseDtoConverter;
+import dev.ihsanakbay.license_management_api.entities.dto.LicenseDto;
+import dev.ihsanakbay.license_management_api.entities.requests.CreateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.CreateTodoRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.UpdateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.UpdateTodoRequest;
+import dev.ihsanakbay.license_management_api.entities.responses.ServiceResponse;
 import dev.ihsanakbay.license_management_api.exception.DataNotFoundException;
-import dev.ihsanakbay.license_management_api.model.License;
+import dev.ihsanakbay.license_management_api.mappers.LicenseMapper;
+import dev.ihsanakbay.license_management_api.entities.model.License;
 import dev.ihsanakbay.license_management_api.repository.LicenseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -19,29 +23,30 @@ import java.util.stream.Collectors;
 public class LicenseService {
     private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
     private final LicenseRepository licenseRepository;
-    private final LicenseDtoConverter converter;
     private final CountryService countryService;
     private final TodoService todoService;
+    private final LicenseMapper licenseMapper;
 
-    public LicenseService(LicenseRepository licenseRepository, LicenseDtoConverter converter, CountryService countryService, TodoService todoService) {
+    public LicenseService(LicenseRepository licenseRepository, CountryService countryService, TodoService todoService, LicenseMapper licenseMapper) {
         this.licenseRepository = licenseRepository;
-        this.converter = converter;
         this.countryService = countryService;
         this.todoService = todoService;
+        this.licenseMapper = licenseMapper;
     }
+
 
     public ServiceResponse<LicenseDto> getLicenseById(String id) {
         return new ServiceResponse<>(
                 true,
                 "",
-                converter.convert(findLicenseById(id))
+                licenseMapper.licenseToLicenseDto(findLicenseById(id))
         );
     }
 
     public ServiceResponse<List<LicenseDto>> getLicenseByCountry(String code) {
         var licenses = findLicenseByCountry(code)
                 .stream()
-                .map(converter::convert)
+                .map(licenseMapper::licenseToLicenseDto)
                 .collect(Collectors.toList());
 
         return new ServiceResponse<>(
@@ -81,7 +86,7 @@ public class LicenseService {
                 country
         );
         License newLicense = licenseRepository.save(license);
-        var result = converter.convert(newLicense);
+        var result = licenseMapper.licenseToLicenseDto(newLicense);
 
         if (request.todos().isPresent()) {
             request.todos().get().forEach(t -> {
@@ -127,7 +132,7 @@ public class LicenseService {
         );
 
         License updatedLicense = licenseRepository.save(license);
-        var result = converter.convert(updatedLicense);
+        var result = licenseMapper.licenseToLicenseDto(updatedLicense);
 
         if (request.todos().isPresent()) {
             request.todos().get().forEach(t -> {
@@ -174,7 +179,7 @@ public class LicenseService {
         var founded = findLicenseById(id);
         founded.setStatus(!founded.getStatus());
         founded.setUpdatedAt(LocalDateTime.now());
-        var result = converter.convert(licenseRepository.save(founded));
+        var result = licenseMapper.licenseToLicenseDto(licenseRepository.save(founded));
         return new ServiceResponse<>(
                 true,
                 "License status changed successfully",
