@@ -1,18 +1,17 @@
 package dev.ihsanakbay.license_management_api.controller;
 
 import dev.ihsanakbay.license_management_api.entities.dto.CountryDto;
-import dev.ihsanakbay.license_management_api.entities.requests.CreateCountryRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.CountryRequest.CreateCountryRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.CountryRequest.UpdateCountryRequest;
 import dev.ihsanakbay.license_management_api.entities.responses.ServiceResponse;
-import dev.ihsanakbay.license_management_api.entities.requests.UpdateCountryRequest;
 import dev.ihsanakbay.license_management_api.service.CountryService;
-import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/countries")
+@RequestMapping("/api/admin/countries")
 public class CountriesController {
     private final CountryService countryService;
 

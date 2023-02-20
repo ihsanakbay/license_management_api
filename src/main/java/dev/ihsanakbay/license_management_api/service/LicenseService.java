@@ -1,10 +1,10 @@
 package dev.ihsanakbay.license_management_api.service;
 
 import dev.ihsanakbay.license_management_api.entities.dto.LicenseDto;
-import dev.ihsanakbay.license_management_api.entities.requests.CreateLicenseRequest;
-import dev.ihsanakbay.license_management_api.entities.requests.CreateTodoRequest;
-import dev.ihsanakbay.license_management_api.entities.requests.UpdateLicenseRequest;
-import dev.ihsanakbay.license_management_api.entities.requests.UpdateTodoRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.LicenseRequest.CreateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.TodoRequest.CreateTodoRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.LicenseRequest.UpdateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.TodoRequest.UpdateTodoRequest;
 import dev.ihsanakbay.license_management_api.entities.responses.ServiceResponse;
 import dev.ihsanakbay.license_management_api.exception.DataNotFoundException;
 import dev.ihsanakbay.license_management_api.mappers.LicenseMapper;
@@ -42,6 +42,7 @@ public class LicenseService {
                 licenseMapper.licenseToLicenseDto(findLicenseById(id))
         );
     }
+
 
     public ServiceResponse<List<LicenseDto>> getLicenseByCountry(String code) {
         var licenses = findLicenseByCountry(code)
@@ -187,7 +188,7 @@ public class LicenseService {
         );
     }
 
-    private License findLicenseById(String id) {
+    protected License findLicenseById(String id) {
         return licenseRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("License couldn't find by id: " + id));
     }

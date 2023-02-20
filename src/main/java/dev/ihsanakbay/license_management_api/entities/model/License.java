@@ -51,12 +51,12 @@ public class License {
     private String tag;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
     @NotBlank
     @NotNull
     private Country country;
-    @OneToMany(mappedBy = "license", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "license", fetch = FetchType.EAGER)
     private Set<Todo> todos;
 
     public enum LicenseType {

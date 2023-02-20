@@ -1,11 +1,10 @@
 package dev.ihsanakbay.license_management_api.controller;
 
 import dev.ihsanakbay.license_management_api.entities.dto.LicenseDto;
-import dev.ihsanakbay.license_management_api.entities.requests.CreateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.LicenseRequest.CreateLicenseRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.LicenseRequest.UpdateLicenseRequest;
 import dev.ihsanakbay.license_management_api.entities.responses.ServiceResponse;
-import dev.ihsanakbay.license_management_api.entities.requests.UpdateLicenseRequest;
 import dev.ihsanakbay.license_management_api.service.LicenseService;
-import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

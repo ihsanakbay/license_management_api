@@ -1,7 +1,7 @@
 package dev.ihsanakbay.license_management_api.service;
 
-import dev.ihsanakbay.license_management_api.entities.requests.CreateTodoRequest;
-import dev.ihsanakbay.license_management_api.entities.requests.UpdateTodoRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.TodoRequest.CreateTodoRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.TodoRequest.UpdateTodoRequest;
 import dev.ihsanakbay.license_management_api.exception.DataNotFoundException;
 import dev.ihsanakbay.license_management_api.entities.model.Todo;
 import dev.ihsanakbay.license_management_api.repository.TodoRepository;

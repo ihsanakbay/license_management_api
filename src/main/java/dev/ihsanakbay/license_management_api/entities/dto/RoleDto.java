@@ -1,2 +1,6 @@
-package dev.ihsanakbay.license_management_api.entities.dto;public record RoleDto() {
+package dev.ihsanakbay.license_management_api.entities.dto;
+
+public record RoleDto(
+        String name
+) {
 }
