@@ -1,9 +1,9 @@
 package dev.ihsanakbay.license_management_api.service;
 
 import dev.ihsanakbay.license_management_api.entities.dto.CountryDto;
-import dev.ihsanakbay.license_management_api.entities.requests.CreateCountryRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.CountryRequest.CreateCountryRequest;
 import dev.ihsanakbay.license_management_api.entities.responses.ServiceResponse;
-import dev.ihsanakbay.license_management_api.entities.requests.UpdateCountryRequest;
+import dev.ihsanakbay.license_management_api.entities.requests.CountryRequest.UpdateCountryRequest;
 import dev.ihsanakbay.license_management_api.exception.DataNotFoundException;
 import dev.ihsanakbay.license_management_api.mappers.CountryMapper;
 import dev.ihsanakbay.license_management_api.entities.model.Country;

@@ -1,4 +1,4 @@
-package dev.ihsanakbay.license_management_api.entities.requests;
+package dev.ihsanakbay.license_management_api.entities.requests.CountryRequest;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

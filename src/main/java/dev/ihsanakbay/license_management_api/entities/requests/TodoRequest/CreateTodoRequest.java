@@ -1,4 +1,4 @@
-package dev.ihsanakbay.license_management_api.entities.requests;
+package dev.ihsanakbay.license_management_api.entities.requests.TodoRequest;
 
 import dev.ihsanakbay.license_management_api.entities.model.License;
 import jakarta.validation.constraints.NotBlank;

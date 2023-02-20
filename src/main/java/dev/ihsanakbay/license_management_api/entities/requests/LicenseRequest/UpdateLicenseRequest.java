@@ -1,6 +1,7 @@
-package dev.ihsanakbay.license_management_api.entities.requests;
+package dev.ihsanakbay.license_management_api.entities.requests.LicenseRequest;
 
 import dev.ihsanakbay.license_management_api.entities.model.License;
+import dev.ihsanakbay.license_management_api.entities.requests.TodoRequest.UpdateTodoRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
