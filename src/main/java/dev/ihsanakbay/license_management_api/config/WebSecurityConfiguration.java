@@ -39,16 +39,16 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/files/**").hasAnyRole("ADMIN", "USER");
-                    auth.requestMatchers("/api/licenses/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/api/admin/**").hasAuthority("ADMIN");
+                    auth.requestMatchers("/api/files/**").hasAnyAuthority("ADMIN", "USER");
+                    auth.requestMatchers("/api/licenses/**").hasAnyAuthority("ADMIN", "USER");
                     auth.requestMatchers("/api/auth/**").permitAll();
                     auth.requestMatchers("/swagger-ui/**", "/**").permitAll();
                     auth.anyRequest().authenticated();
-                });
+                })
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
